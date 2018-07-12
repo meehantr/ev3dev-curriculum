@@ -92,7 +92,7 @@ def using_a_robot_wrapper_class():
 
 
 def the_computer_can_receive_messages_too():
-    """ Showing an example of a PC receiving a message.  This code is similar to m1 but not
+    """ Showing an example of a PC receiving a message.  This code is similar to meehantr but not
         identical, so don't copy anything from here except maybe the words:
           mqtt_client.send_message("on_circle_draw", [        ])
         """
@@ -103,7 +103,8 @@ def the_computer_can_receive_messages_too():
             self.canvas = canvas
 
         def on_circle_draw(self, color, x, y):
-            self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color, width=3)
+            self.canvas.create_oval(x - 10, y - 10, x + 10, y + 10, fill=color,
+                                    width=3)
 
     canvas = "A Tkinter object"  # Something specific to the m1_pc_shared_circles example.
     my_delegate = MyDelegate(canvas)

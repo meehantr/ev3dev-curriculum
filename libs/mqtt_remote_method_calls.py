@@ -128,7 +128,7 @@ import json
 import collections
 import paho.mqtt.client as mqtt
 
-LEGO_NUMBER = 99  # TODO: Set your LEGO_NUMBER
+LEGO_NUMBER = 8  # done Set your LEGO_NUMBER
 
 
 class MqttClient(object):
@@ -145,7 +145,9 @@ class MqttClient(object):
         self.subscription_topic_name = None
         self.publish_topic_name = None
 
-    def connect_to_ev3(self, mqtt_broker_ip_address="mosquitto.csse.rose-hulman.edu", lego_robot_number=LEGO_NUMBER):
+    def connect_to_ev3(self,
+                       mqtt_broker_ip_address="mosquitto.csse.rose-hulman.edu",
+                       lego_robot_number=LEGO_NUMBER):
         """
         Code running on the PC should use this command to connect to the EV3 robot.
         Connects to the MQTT broker and begins listening for messages from the EV3.
@@ -156,9 +158,12 @@ class MqttClient(object):
           :type mqtt_broker_ip_address: str
           :type lego_robot_number: int
         """
-        self.connect("msg4pc", "msg4ev3", mqtt_broker_ip_address, lego_robot_number)
+        self.connect("msg4pc", "msg4ev3", mqtt_broker_ip_address,
+                     lego_robot_number)
 
-    def connect_to_pc(self, mqtt_broker_ip_address="mosquitto.csse.rose-hulman.edu", lego_robot_number=LEGO_NUMBER):
+    def connect_to_pc(self,
+                      mqtt_broker_ip_address="mosquitto.csse.rose-hulman.edu",
+                      lego_robot_number=LEGO_NUMBER):
         """
         Code running on the EV3 should use this command to connect to the student PC.
         Connects to the MQTT broker and begins listening for messages from the PC.
@@ -169,10 +174,12 @@ class MqttClient(object):
           :type mqtt_broker_ip_address: str
           :type lego_robot_number: int
         """
-        self.connect("msg4ev3", "msg4pc", mqtt_broker_ip_address, lego_robot_number)
+        self.connect("msg4ev3", "msg4pc", mqtt_broker_ip_address,
+                     lego_robot_number)
 
     def connect(self, subscription_suffix, publish_suffix,
-                mqtt_broker_ip_address="mosquitto.csse.rose-hulman.edu", lego_robot_number=LEGO_NUMBER):
+                mqtt_broker_ip_address="mosquitto.csse.rose-hulman.edu",
+                lego_robot_number=LEGO_NUMBER):
         """
         Connect this MQTT client to the broker, note that connect_to_ev3 and connect_to_pc call this method.
         This connect method is the most generic allowing callers to set the subscription and publish topics.
@@ -192,10 +199,12 @@ class MqttClient(object):
 
         # Callback for when the connection to the broker is complete.
         self.client.on_connect = self._on_connect
-        self.client.message_callback_add(self.subscription_topic_name, self._on_message)
+        self.client.message_callback_add(self.subscription_topic_name,
+                                         self._on_message)
 
         self.client.connect(mqtt_broker_ip_address, 1883, 60)
-        print("Connecting to mqtt broker {}".format(mqtt_broker_ip_address), end="")
+        print("Connecting to mqtt broker {}".format(mqtt_broker_ip_address),
+              end="")
         self.client.loop_start()
 
     def send_message(self, function_name, parameter_list=None):
@@ -218,7 +227,9 @@ class MqttClient(object):
             else:
                 # Attempt to bail out users that pass a single item that was a non-list.
                 # CONSIDER: Make this a feature and print no message. Just make it work.
-                print("The parameter_list {} is not a list. Converting it to a list for you.".format(parameter_list))
+                print(
+                    "The parameter_list {} is not a list. Converting it to a list for you.".format(
+                        parameter_list))
                 message_dict["payload"] = [parameter_list]
         message = json.dumps(message_dict)
         self.client.publish(self.publish_topic_name, message)
@@ -269,10 +280,13 @@ class MqttClient(object):
             else:
                 attempted_return = method_to_call()
             if attempted_return:
-                print("The method {} returned a value. That's not really how this library works." +
-                      "The value {} was not magically sent back over".format(message_type, attempted_return))
+                print(
+                    "The method {} returned a value. That's not really how this library works." +
+                    "The value {} was not magically sent back over".format(
+                        message_type, attempted_return))
         else:
-            print("Attempt to call method {} which was not found.".format(message_type))
+            print("Attempt to call method {} which was not found.".format(
+                message_type))
 
     def close(self):
         """

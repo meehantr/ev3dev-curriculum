@@ -3,7 +3,7 @@
 This module lets you practice using the buttons on the EV3 as states.
 
 Normally we'll use event callbacks with buttons, but this example uses buttons as states for the purposes of example.
-Much like we did in m1 of the motors unit, later we will show you different (better) ways to use buttons.
+Much like we did in meehantr of the motors unit, later we will show you different (better) ways to use buttons.
 
 Authors: David Fisher and PUT_YOUR_NAME_HERE.
 """  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
@@ -44,7 +44,8 @@ def main():
 
     # Buttons on EV3 (the real focus of this module)
     btn = ev3.Button()  # Construct the one and only EV3 Button object
-    led_colors = [ev3.Leds.BLACK,  # This list is useful for the down button in TO DO 4.
+    led_colors = [ev3.Leds.BLACK,
+                  # This list is useful for the down button in TO DO 4.
                   ev3.Leds.GREEN,
                   ev3.Leds.RED,
                   # ev3.Leds.ORANGE,  # Too close to another color in my opinion
@@ -100,7 +101,8 @@ def main():
 
         if btn.backspace:
             break
-        time.sleep(0.01)  # Best practice to have a short delay to avoid working too hard between loop iterations.
+        time.sleep(
+            0.01)  # Best practice to have a short delay to avoid working too hard between loop iterations.
 
     # Best practice to leave the LEDs on after you finish a program so you don't put away the robot while still on.
     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
