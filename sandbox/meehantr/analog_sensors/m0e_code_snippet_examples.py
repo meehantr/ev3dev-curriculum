@@ -6,7 +6,7 @@ These are just snippets used in the lecture, not actual code to run!
 TODO: 1. PASSIVELY LISTEN TO THE LECTURE ABOUT ANALOG SENSORS
 https://docs.google.com/presentation/d/1U00IlFqIT_S2v9HV-TKSO6Y6foH4sDom9yytsV_PWfY/edit?usp=sharing
 
-Author: David Fisher
+Author: David Fisher!!!
 """
 
 import ev3dev.ev3 as ev3
@@ -33,7 +33,8 @@ def color_sensor_color():
         if current_color == ev3.ColorSensor.COLOR_RED:
             ev3.Sound.speak("I see Red").wait()
         else:
-            color_names = ["No color", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
+            color_names = ["No color", "Black", "Blue", "Green", "Yellow",
+                           "Red", "White", "Brown"]
             print("I see " + color_names[current_color])
         time.sleep(1.0)
 
@@ -49,7 +50,8 @@ def color_sensor_reflected_light_intensity():
 
     for _ in range(5):
         percent_reflected = color_sensor.reflected_light_intensity
-        print("The amount of light reflected is {}%.".format(percent_reflected))
+        print(
+            "The amount of light reflected is {}%.".format(percent_reflected))
         time.sleep(1.0)
 
 
