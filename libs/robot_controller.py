@@ -15,6 +15,21 @@ import ev3dev.ev3 as ev3
 import math
 import time
 
+def drive_inches(inches_to_target, speed_in_dps):
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+    degrees_per_inch = 90
+    position_sp = inches_to_target * degrees_per_inch
+
+    left_motor.run_to_rel_pos(position_sp=position_sp, speed_sp=speed_in_dps)
+    right_motor.run_to_rel_pos(position_sp=position_sp, speed_sp=
+    speed_in_dps)
+
+    left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
+    ev3.Sound.beep().wait()
+
 
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""

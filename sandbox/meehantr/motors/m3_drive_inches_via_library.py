@@ -4,10 +4,11 @@ This module lets you practice refactoring code to use a shared library.  The cod
 The team should work together and pick one team member to type code into libs/robot_controller.py to create a
 constructor and a method called drive_inches.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Thomas Meehan.
+"""  # done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. On your computer right click on the libs folder in PyCharm, select Mark Directory as... Sources Root
+# done: 2. On your computer right click on the libs folder in PyCharm, select
+# Mark Directory as... Sources Root
 #   That should fix the error on the import robot_controller as robo line below (expand the imports below)
 #   Marking that folder as a Source Root will allow any module in that folder to be used globally in this project.
 #   Note, when that folder is uploaded to the EV3, it wil be in the folder /home/robot/csse120/libs
