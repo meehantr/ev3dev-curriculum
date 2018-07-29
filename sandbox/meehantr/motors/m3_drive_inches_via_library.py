@@ -15,7 +15,8 @@ Authors: David Fisher and Thomas Meehan.
 #   That folder path is special on your robot because it is set as the PYTHONPATH (done within the .bashrc file)
 #   Normally you can't just use a module in some random folder, but the libs folder has been setup special.
 
-# TODO: 3. Have everyone talk about this problem together then pick one team member to modify libs/robot_controller.py
+# done: 3. Have everyone talk about this problem together then pick one team
+# member to modify libs/robot_controller.py
 # as necessary to make the code below perform the same task as the prior module. As mentioned in the top doc-string for
 # the file, you may not modify the code below.  Warning, make sure you UPLOAD the library to the robot before running
 # this module.
@@ -24,12 +25,14 @@ Authors: David Fisher and Thomas Meehan.
 #  to do a VCS --> Update project...
 # Once the library is implemented each team member should be able to run their version of this code on the robot.
 
-# TODO: 4. Formally test your work. When you think you have the problem complete run these tests:
+# done: 4. Formally test your work. When you think you have the problem
+# complete run these tests:
 #   500 dps 24 inches
 #   500 dps -24 inches
 #   Should work exactly as before with these tests and more.  It should beep after the movement is over.
 
-# TODO: 5. Call over a TA or instructor to sign your team's checkoff sheet and do a code review of your library.
+# done: 5. Call over a TA or instructor to sign your team's checkoff sheet and
+# do a code review of your library.
 #
 # Observations you should make, you are a TEAM and making great library methods will make life easier for everyone.
 

@@ -36,8 +36,10 @@ def main():
         left_sp = int(
             input("Enter a speed (0 to 900 dps): "))
         right_sp = left_sp
+        if left_sp == 0:
+            break
         dist_to_travel = int(input("Enter a distance to drive (inches): "))
-        if left_sp == 0 or dist_to_travel == 0:
+        if dist_to_travel == 0:
             break
         position_sp = dist_to_travel * degrees_per_inch
 
