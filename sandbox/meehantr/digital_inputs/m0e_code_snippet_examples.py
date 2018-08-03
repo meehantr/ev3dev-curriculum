@@ -3,7 +3,8 @@
 Contains example code snippets used in the drive motor lecture.  Don't try to actually run this file!
 These are just snippets used in the lecture, not actual code to run!
 
-TODO: 1. PASSIVELY LISTEN TO THE LECTURE ABOUT DIGITAL INPUTS (and a few other things)
+done: 1. PASSIVELY LISTEN TO THE LECTURE ABOUT DIGITAL INPUTS (and a few other
+things)
 https://docs.google.com/presentation/d/1mUxsC-cUO4S5bwhTAQG0G10IO0gsbAU5YEORxeh0mMc/edit?usp=sharing
 
 Author: David Fisher
@@ -199,7 +200,8 @@ def screen_example():
     from PIL import Image
     lcd_screen = ev3.Screen()
 
-    image = Image.open("/home/robot/csse120/assets/images/ev3_lego/eyes_angry.bmp")
+    image = Image.open(
+        "/home/robot/csse120/assets/images/ev3_lego/eyes_angry.bmp")
     lcd_screen.image.paste(image, (0, 0))
     lcd_screen.update()
 
