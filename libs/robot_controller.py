@@ -47,3 +47,60 @@ class Snatch3r(object):
         left_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
         ev3.Sound.beep().wait()
+
+    def arm_calibration(self):
+        """
+        Runs the arm up until the touch sensor is hit then back to the bottom again, beeping at both locations.
+        Once back at in the bottom position, gripper open, set the absolute encoder position to 0.  You are calibrated!
+        The Snatch3r arm needs to move 14.2 revolutions to travel from the touch sensor to the open position.
+
+        Type hints:
+          :type arm_motor: ev3.MediumMotor
+          :type touch_sensor: ev3.TouchSensor
+        """
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert arm_motor.connected
+        touch_sensor = ev3.TouchSensor()
+        assert touch_sensor
+        arm_motor.run_forever(speed_sp=900)
+        while not touch_sensor.is_pressed:
+            time.sleep(0.01)
+        arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        ev3.Sound.beep().wait()
+        arm_revolutions_for_full_range = 14.2
+        degrees_for_arm_revolution = arm_revolutions_for_full_range * 360
+        arm_motor.run_to_rel_pos(position_sp=-degrees_for_arm_revolution)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
+        arm_motor.position = 0
+
+    def arm_up(self):
+        """
+        Moves the Snatch3r arm to the up position.
+
+        Type hints:
+          :type arm_motor: ev3.MediumMotor
+          :type touch_sensor: ev3.TouchSensor
+        """
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert arm_motor.connected
+        touch_sensor = ev3.TouchSensor()
+        assert touch_sensor
+        arm_motor.run_forever(speed_sp=900)
+        while not touch_sensor.is_pressed:
+            time.sleep(0.01)
+        arm_motor.stop(stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        ev3.Sound.beep().wait()
+
+    def arm_down(self):
+        """
+        Moves the Snatch3r arm to the down position.
+
+        Type hints:
+          :type arm_motor: ev3.MediumMotor
+        """
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert arm_motor.connected
+        arm_motor.run_to_abs_pos(position_sp=0, speed_sp=900)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
