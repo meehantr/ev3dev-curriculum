@@ -106,7 +106,7 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def shutdown(self, button):
-        while not btn.backspace:
+        while not button.backspace:
             left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
             right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
