@@ -105,16 +105,14 @@ class Snatch3r(object):
         arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
-    def shutdown(self, button):
-        while not button.backspace:
-            left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-            right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    def shutdown(self):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        left_motor.stop()
+        right_motor.stop()
 
-            left_motor.stop()
-            right_motor.stop()
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
 
-            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
-
-            print('Goodbye!')
-            ev3.Sound.speak('Goodbye').wait()
+        print('Goodbye!')
+        ev3.Sound.speak('Goodbye').wait()
