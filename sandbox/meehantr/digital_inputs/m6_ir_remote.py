@@ -35,7 +35,8 @@ import robot_controller as robo
 
 
 # Note that todo2 is farther down in the code.  That method needs to be written before you do todo3.
-# TODO: 3. Have someone on your team run this program on the EV3 and make sure everyone understands the code.
+# done: 3. Have someone on your team run this program on the EV3 and make sure
+# everyone understands the code.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
 
 
@@ -59,9 +60,23 @@ def main():
     robot = robo.Snatch3r()
     dc = DataContainer()
 
-    # TODO: 4. Add the necessary IR handler callbacks as per the instructions above.
+    # done: 4. Add the necessary IR handler callbacks as per the instructions
+    # above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
+    rc1 = ev3.RemoteControl(channel=1)
+    rc2 = ev3.RemoteControl(channel=2)
+    assert rc1
+    assert rc2
+
+    rc1.on_red_up = lambda state: handle_red_up(state)
+    rc1.on_red_down = lambda state: handle_red_down(state)
+    rc1.on_blue_up = lambda state: handle_blue_up(state)
+    rc1.on_blue_down = lambda state: handle_blue_down(state)
+
+    rc2.on_red_up = lambda state: handle_arm_up_button(state, robot)
+    rc2.on_red_down = lambda state: handle_arm_down_button(state, robot)
+    rc2.on_blue_up = lambda state: handle_calibrate_button(state, robot)
 
     # For our standard shutdown button.
     btn = ev3.Button()
@@ -70,8 +85,10 @@ def main():
     robot.arm_calibration()  # Start with an arm calibration in this program.
 
     while dc.running:
-        # TODO: 5. Process the RemoteControl objects.
+        # done: 5. Process the RemoteControl objects.
         btn.process()
+        rc1.process()
+        rc2.process()
         time.sleep(0.01)
 
     # done: 2. Have everyone talk about this problem together then pick one
@@ -88,9 +105,10 @@ def main():
 # Some event handlers have been written for you (ones for the arm).
 # Movement event handlers have not been provided.
 # ----------------------------------------------------------------------
-# TODO: 6. Implement the IR handler callbacks handlers.
+# done: 6. Implement the IR handler callbacks handlers.
 
-# TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
+# done: 7. When your program is complete, call over a TA or instructor to sign
+# your checkoff sheet and do a code review.
 #
 # Observations you should make, IR buttons are a fun way to control the robot.
 
@@ -141,6 +159,50 @@ def handle_shutdown(button_state, dc):
     """
     if button_state:
         dc.running = False
+
+
+def handle_red_up(button_state):
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    assert left_motor
+    if button_state:
+        left_motor.run_forever(speed_sp=600)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+    else:
+        left_motor.stop()
+        ev3.Leds.all_off()
+
+
+def handle_red_down(button_state):
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    assert left_motor
+    if button_state:
+        left_motor.run_forever(speed_sp=-600)
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+    else:
+        left_motor.stop()
+        ev3.Leds.all_off()
+
+
+def handle_blue_up(button_state):
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    assert right_motor
+    if button_state:
+        right_motor.run_forever(speed_sp=600)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+    else:
+        right_motor.stop()
+        ev3.Leds.all_off()
+
+
+def handle_blue_down(button_state):
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    assert right_motor
+    if button_state:
+        right_motor.run_forever(speed_sp=-600)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+    else:
+        right_motor.stop()
+        ev3.Leds.all_off()
 
 
 # ----------------------------------------------------------------------
