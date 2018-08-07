@@ -13,7 +13,6 @@ The LEGO_NUMBER for your team is saved in the mqtt_remote_method_calls.py file. 
 it to spy on a another team for fun go ahead.  I recommend not committing that change though.
 """
 
-
 import tkinter
 from tkinter import ttk
 
@@ -56,8 +55,9 @@ def main():
     # Create an MQTT connection
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
-    mqtt_client.connect("topic_name", "topic_name")
-    # mqtt_client.connect("topic_name", "topic_name", "35.194.247.175")  # Off campus IP address of a GCP broker
+    # mqtt_client.connect("topic_name", "topic_name")
+    mqtt_client.connect("topic_name", "topic_name",
+                        "35.194.247.175")  # Off campus IP address of a GCP broker
 
     root.mainloop()
 

@@ -146,7 +146,7 @@ class MqttClient(object):
         self.publish_topic_name = None
 
     def connect_to_ev3(self,
-                       mqtt_broker_ip_address="mosquitto.csse.rose-hulman.edu",
+                       mqtt_broker_ip_address='broker.hivemq.com',
                        lego_robot_number=LEGO_NUMBER):
         """
         Code running on the PC should use this command to connect to the EV3 robot.
@@ -162,7 +162,7 @@ class MqttClient(object):
                      lego_robot_number)
 
     def connect_to_pc(self,
-                      mqtt_broker_ip_address="mosquitto.csse.rose-hulman.edu",
+                      mqtt_broker_ip_address='broker.hivemq.com',
                       lego_robot_number=LEGO_NUMBER):
         """
         Code running on the EV3 should use this command to connect to the student PC.
@@ -178,7 +178,7 @@ class MqttClient(object):
                      lego_robot_number)
 
     def connect(self, subscription_suffix, publish_suffix,
-                mqtt_broker_ip_address="mosquitto.csse.rose-hulman.edu",
+                mqtt_broker_ip_address='broker.hivemq.com',
                 lego_robot_number=LEGO_NUMBER):
         """
         Connect this MQTT client to the broker, note that connect_to_ev3 and connect_to_pc call this method.
