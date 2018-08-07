@@ -3,8 +3,8 @@ The goal for this module is to show that usually in our MQTT communication we wi
 that same recipient will be sending messages back to us.  This module also runs only on your PC and has very few todo
 items.  You will simply be setting your name and you will be selecting one person on your team to send messages to.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Thomas Meehan.
+"""  # done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import tkinter
 from tkinter import ttk
@@ -22,10 +22,13 @@ class MyDelegate(object):
 
 
 def main():
-    # TODO: 2. Set my_name and set team_member_name then try this program with that person.
+    # done: 2. Set my_name and set team_member_name then try this program with
+    # that person.
     # For teams of 3 just have 2 people talk to each other and the other person can just watch this time.
-    my_name = "Dave"  # Used to set the topic that you are *subscribed to* listen to
-    team_member_name = "Dave"  # Used to set the topic that you will *publish to*
+    my_name = 'Thomas'  # Used to set the topic that you are *subscribed to*
+    # listen to
+    team_member_name = "Thomas"  # Used to set the topic that you will *publish
+    #  to*
 
     # What happens if you set my_name and team_member_name to the same value?
     # The goal is simply for you to become more comfortable with how subscriptions and publish work with MQTT
@@ -45,7 +48,8 @@ def main():
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
 
-    label = ttk.Label(main_frame, justify=tkinter.LEFT, text="Send a message to " + team_member_name)
+    label = ttk.Label(main_frame, justify=tkinter.LEFT,
+                      text="Send a message to " + team_member_name)
     label.grid(columnspan=2)
 
     msg_entry = ttk.Entry(main_frame, width=60)
@@ -53,10 +57,14 @@ def main():
 
     msg_button = ttk.Button(main_frame, text="Send")
     msg_button.grid(row=2, column=1)
-    msg_button['command'] = lambda: send_message(mqtt_client, my_name, chat_window, msg_entry)
-    root.bind('<Return>', lambda event: send_message(mqtt_client, my_name, chat_window, msg_entry))
+    msg_button['command'] = lambda: send_message(mqtt_client, my_name,
+                                                 chat_window, msg_entry)
+    root.bind('<Return>',
+              lambda event: send_message(mqtt_client, my_name, chat_window,
+                                         msg_entry))
 
-    chat_window = ttk.Label(main_frame, justify=tkinter.LEFT, text="", width=60, wraplength="500p")
+    chat_window = ttk.Label(main_frame, justify=tkinter.LEFT, text="",
+                            width=60, wraplength="500p")
     # chat_window.pack(fill="x")
     chat_window.grid(columnspan=2)
 
