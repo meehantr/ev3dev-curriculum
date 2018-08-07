@@ -55,9 +55,10 @@ def main():
     # Create an MQTT connection
     my_delegate = MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
-    # mqtt_client.connect("topic_name", "topic_name")
-    mqtt_client.connect("topic_name", "topic_name",
-                        "35.194.247.175")  # Off campus IP address of a GCP broker
+    mqtt_client.connect("topic_name", "topic_name")
+    # mqtt_client.connect("topic_name", "topic_name",
+    #                    "35.194.247.175")  # Off campus IP address of a GCP
+    #  broker
 
     root.mainloop()
 
