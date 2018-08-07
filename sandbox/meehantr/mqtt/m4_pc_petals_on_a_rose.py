@@ -15,8 +15,8 @@ number of dice to help you figure out the pattern more quickly.
 
 To check off this part of the assignment win the game (without looking at the EV3 code).
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Thomas Meehan.
+"""  # done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import tkinter
 from tkinter import ttk
@@ -24,18 +24,25 @@ from tkinter import ttk
 import mqtt_remote_method_calls as com
 
 
-# TODO: 2. Create a class. Feel free to call it MyDelegate.
+# done: 2. Create a class. Feel free to call it MyDelegate.
 # Within that class you don't even need an __init__ constructor (an empty constructor comes for free)
 
-# TODO: 3. Create a method named guess_response within MyDelegate.
-# guess_response needs to receive self and a string, feel free to call the string parameter message_from_ev3
-# within the body of the method print message_from_ev3.  That's it.  You simply need to hear what EV3 tells you.
+class MyDelegate(object):
+
+    # done: 3. Create a method named guess_response within MyDelegate.
+    # guess_response needs to receive self and a string, feel free to call the string parameter message_from_ev3
+    # within the body of the method print message_from_ev3.  That's it.  You simply need to hear what EV3 tells you.
+    def guess_response(self, message_from_ev3):
+        print(message_from_ev3)
 
 
 def main():
-    # TODO: 4. Create a my_delegate object from your MyDelegate class
+    # done: 4. Create a my_delegate object from your MyDelegate class
     # Create an mqtt_client object from the com.MqttClient class passing in my_delegate
     # connect_to_ev3
+    my_delegate = MyDelegate()
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect_to_ev3()
 
     root = tkinter.Tk()
     root.title("Petals on a Rose")
@@ -43,7 +50,8 @@ def main():
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
 
-    label = ttk.Label(main_frame, text='Look at the EV3, then enter a guess for the solution:')
+    label = ttk.Label(main_frame,
+                      text='Look at the EV3, then enter a guess for the solution:')
     label.grid(columnspan=2)
 
     guess_entry = ttk.Entry(main_frame, width=8)
@@ -59,7 +67,8 @@ def main():
 
     num_dice_button = ttk.Button(main_frame, text="Set num dice")
     num_dice_button.grid(row=3, column=1)
-    num_dice_button['command'] = lambda: set_num_dice(mqtt_client, num_dice_entry)
+    num_dice_button['command'] = lambda: set_num_dice(mqtt_client,
+                                                      num_dice_entry)
 
     q_button = ttk.Button(main_frame, text="Quit")
     q_button.grid(row=4, column=0)
@@ -74,18 +83,21 @@ def main():
 
 def guess(mqtt_client, number_to_guess_entry):
     """ Calls a method on EV3 called 'guess' passing in an int from the number_to_guess_entry. """
-    # TODO: 5. Uncomment the line of code below to make guesses with EV3.
-    # mqtt_client.send_message("guess", [int(number_to_guess_entry.get())])
+    # done: 5. Uncomment the line of code below to make guesses with EV3.
+    mqtt_client.send_message("guess", [int(number_to_guess_entry.get())])
     number_to_guess_entry.delete(0, 'end')
     # Note: You can play the game with only TO DO 5 complete, but it will be easier to solve if you do TO DO 6 as well.
 
 
 def set_num_dice(mqtt_client, num_dice_entry):
     """ Calls a method on EV3 called 'set_number_of_dice' passing in an int from the num_dice_entry. """
-    # TODO: 6. Write the line of code necessary to implement this method based on the doc string's description.
+    # done: 6. Write the line of code necessary to implement this method based
+    # on the doc string's description.
+    mqtt_client.send_message("set_number_of_dice", [num_dice_entry])
 
 
-# TODO: 7. See if you can solve the mystery.  Based on the dice how can you solve Petals on a Rose?
+# TODO: 7. See if you can solve the mystery.  Based on the dice how can
+#  you solve Petals on a Rose?
 # To check off this part of the assignment figure out the pattern and win the game (without looking at the EV3 code).
 
 
