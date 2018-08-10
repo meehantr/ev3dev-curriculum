@@ -11,7 +11,7 @@ robot beeps thinking blue is present, but no blue is present) try setting the th
 for your environment). After a beep wait for at least 1 second to avoid lots of annoying beeps.
 
 Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+"""  # done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -30,20 +30,25 @@ def main():
     robot.pixy.mode = "SIG1"
 
     while not robot.touch_sensor.is_pressed:
-        # TODO: 2. Implement the module as described in the opening comment block.
+        # done: 2. Implement the module as described in the opening comment
+        # block.
         # It is recommended that you add to your Snatch3r class's constructor the pixy object, as shown
         #   self.pixy = ev3.Sensor(driver_name="pixy-lego")
         #   assert self.pixy
         # Then here you can use a command like width = robot.pixy.value(3)
-
-
-
+        print('X:', robot.pixy.value(1), 'Y:', robot.pixy.value(2), 'Width:',
+              robot.pixy.value(3), 'Height:',
+              robot.pixy.value(4))
+        if robot.pixy.value(3) > 0 or robot.pixy.value(4) > 0:
+            ev3.Sound.beep().wait()
+            time.sleep(1)
         time.sleep(0.1)
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 
-# TODO: 3. Call over a TA or instructor to sign your team's checkoff sheet.
+
+# done: 3. Call over a TA or instructor to sign your team's checkoff sheet.
 #
 # Observations you should make, the Pixy cam can detect colors.  That's just neat. ;)
 

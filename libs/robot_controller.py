@@ -27,6 +27,8 @@ class Snatch3r(object):
         assert self.touch_sensor
         self.ir_sensor = ev3.InfraredSensor()
         assert self.ir_sensor
+        self.pixy = ev3.Sensor(driver_name="pixy-lego")
+        assert self.pixy
 
     def drive_inches(self, inches_to_target, speed_in_dps):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
