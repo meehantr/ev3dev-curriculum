@@ -27,7 +27,7 @@ def main():
     mqtt_client = com.MqttClient()
 
     mqtt_client.connect_to_pc()
-
+    print('Connected')
     robot = robo.Snatch3r()
     robot.pixy.mode = "SIG1"
 
@@ -59,4 +59,3 @@ def main():
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
 main()
-
