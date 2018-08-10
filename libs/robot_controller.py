@@ -142,6 +142,9 @@ class Snatch3r(object):
                 print("On the right heading. Distance: ", current_distance)
 
                 if current_distance == 0:
+                    robot.drive_inches(5, 100)
+                    left_motor.stop()
+                    right_motor.stop()
                     return True
                 elif current_distance > 0:
                     print('Starting to drive towards beacon')
@@ -158,8 +161,11 @@ class Snatch3r(object):
                     left_motor.run_forever(speed_sp=turn_speed)
                     right_motor.run_forever(speed_sp=-turn_speed)
             if math.fabs(current_heading) > 10:
-                left_motor.run_forever(speed_sp=-turn_speed)
-                right_motor.run_forever(speed_sp=turn_speed)
-
+                if current_heading > 0:
+                    left_motor.run_forever(speed_sp=turn_speed)
+                    right_motor.run_forever(speed_sp=-turn_speed)
+                if current_heading < 0:
+                    left_motor.run_forever(speed_sp=-turn_speed)
+                    right_motor.run_forever(speed_sp=turn_speed)
             time.sleep(0.2)
         return False
