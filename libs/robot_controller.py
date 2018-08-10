@@ -125,3 +125,41 @@ class Snatch3r(object):
 
         print('Goodbye!')
         ev3.Sound.speak('Goodbye').wait()
+
+    def seek_beacon(robot):
+        beacon_seeker = ev3.BeaconSeeker(channel=1)
+        forward_speed = 300
+        turn_speed = 100
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+        while not robot.touch_sensor.is_pressed:
+
+            current_heading = beacon_seeker.heading
+            current_distance = beacon_seeker.distance
+
+            if math.fabs(current_heading) < 2:
+                print("On the right heading. Distance: ", current_distance)
+
+                if current_distance == 0:
+                    return True
+                elif current_distance > 0:
+                    print('Starting to drive towards beacon')
+                    left_motor.run_forever(speed_sp=forward_speed)
+                    right_motor.run_forever(speed_sp=forward_speed)
+            if math.fabs(current_heading) > 2 & int(math.fabs(
+                    current_heading)) < 10:
+                print('Turning to find beacon', 'Beacon Heading:',
+                      current_heading)
+                if current_heading < 0:
+                    left_motor.run_forever(speed_sp=-turn_speed)
+                    right_motor.run_forever(speed_sp=turn_speed)
+                if current_heading > 0:
+                    left_motor.run_forever(speed_sp=turn_speed)
+                    right_motor.run_forever(speed_sp=-turn_speed)
+            if math.fabs(current_heading) > 10:
+                left_motor.run_forever(speed_sp=-turn_speed)
+                right_motor.run_forever(speed_sp=turn_speed)
+
+            time.sleep(0.2)
+        return False
