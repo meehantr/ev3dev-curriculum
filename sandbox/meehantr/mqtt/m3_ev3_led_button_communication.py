@@ -115,6 +115,7 @@ def main():
 
     mqtt_client.connect_to_pc()
 
+    print('connected')
     # Buttons on EV3 (these obviously assume TO DO: 3. is done)
     btn = ev3.Button()
     btn.on_up = lambda state: handle_button_press(state, mqtt_client, "Up")
