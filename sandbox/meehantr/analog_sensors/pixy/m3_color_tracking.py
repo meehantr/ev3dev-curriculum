@@ -56,6 +56,8 @@ def main():
 
         time.sleep(0.25)
 
+    left_motor.stop()
+    right_motor.stop()
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 
