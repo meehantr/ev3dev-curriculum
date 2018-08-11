@@ -147,10 +147,11 @@ def handle_button_press(button_state, mqtt_client, button_name):
         #   -- Pass the parameters [button_name] as a list.
         # This is meant to help you learn the mqtt_client.send_message syntax.
         # You can review the code above to understand how button_name is passed into this function.
-        mqtt_client.send_message("button_pressed", mqtt_client, [button_name])
+        mqtt_client.send_message("button_pressed", [button_name])
 
 
-# TODO: 5. Run this program on your EV3 and run m3_pc_led_button_communication.py on your PC at the same time.
+# done: 5. Run this program on your EV3 and run
+# m3_pc_led_button_communication.py on your PC at the same time.
 # This will be the first time you've run a program on the robot today, but you'll remember how to do it (right?).
 # Hint: To be less confusing use two different computers for this task.  One to run the EV3 program (you) and one to run
 #   the PC program (a different person on your team).  It can be done from one computer but that gets confusing.
@@ -158,7 +159,8 @@ def handle_button_press(button_state, mqtt_client, button_name):
 # Press the buttons on the EV3 (up, down, left, right) and watch the Tkinter GUI on your PC.
 # When done, press the Back button on EV3 to end that program and click Quit on the Tkinter GUI.
 
-# TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet (demo both LEDs and buttons).
+# done: 6. Call over a TA or instructor to sign your team's checkoff sheet (
+# demo both LEDs and buttons).
 #
 # Observations you should make, when communicating using MQTT there is always a program running on EV3 and on your PC
 #   at the same time.  To make your life easier, you only write one of those programs this time (the on on the EV3).
