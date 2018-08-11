@@ -28,6 +28,8 @@ class Snatch3r(object):
         assert self.ir_sensor
         self.pixy = ev3.Sensor(driver_name="pixy-lego")
         assert self.pixy
+        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
     def loop_forever(self):
         self.running = True
@@ -175,3 +177,23 @@ class Snatch3r(object):
                     right_motor.run_forever(speed_sp=turn_speed)
             time.sleep(0.2)
         return False
+
+    def go_forward(self, left_speed, right_speed):
+        self.left_motor.run_forever(speed_sp=left_speed)
+        self.right_motor.run_forever(speed_sp=right_speed)
+
+    def turn_left(self, left_speed, right_speed):
+        self.left_motor.run_forever(speed_sp=-left_speed)
+        self.right_motor.run_forever(speed_sp=right_speed)
+
+    def stop(self):
+        self.left_motor.stop()
+        self.right_motor.stop()
+
+    def turn_right(self, left_speed, right_speed):
+        self.left_motor.run_forever(speed_sp=left_speed)
+        self.right_motor.run_forever(speed_sp=-right_speed)
+
+    def go_backwards(self, left_speed, right_speed):
+        self.left_motor.run_forever(speed_sp=-left_speed)
+        self.right_motor.run_forever(speed_sp=-right_speed)
