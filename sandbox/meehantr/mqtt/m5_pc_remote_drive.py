@@ -67,17 +67,17 @@ def main():
     forward_button.grid(row=2, column=1)
     # forward_button and '<Up>' key is done for your here...
     forward_button['command'] = lambda: go_forward(mqtt_client,
-                                                   left_speed_entry.get(),
-                                                   right_speed_entry.get())
+                                                   left_speed_entry,
+                                                   right_speed_entry)
     root.bind('<Up>', lambda event: go_forward(mqtt_client,
-                                               left_speed_entry.get(),
-                                               right_speed_entry.get()))
+                                               left_speed_entry,
+                                               right_speed_entry))
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
     # left_button and '<Left>' key
     left_button['command'] = lambda: turn_left(mqtt_client,
-                                               left_speed_entry.get(),
+                                               left_speed_entry,
                                                right_speed_entry)
     root.bind('<Left>', lambda event: turn_left(mqtt_client,
                                                 left_speed_entry,

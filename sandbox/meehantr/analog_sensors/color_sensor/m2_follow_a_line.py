@@ -107,6 +107,7 @@ def follow_the_line(robot, white_level, black_level):
     left_motor.stop()
     right_motor.stop()
 
+
 # TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
 #
 # Observations you should make, following a black line would be easier with 2 sensors (one on each side of the line),
