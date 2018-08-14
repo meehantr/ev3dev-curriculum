@@ -101,7 +101,7 @@ def follow_the_line(robot, white_level, black_level):
             print('turning')
             right_motor.stop()
             time.sleep(0.25)
-        time.sleep(0.1)
+        time.sleep(0.25)
     ev3.Sound.speak("Done")
 
     left_motor.stop()

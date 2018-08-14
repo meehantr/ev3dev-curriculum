@@ -132,6 +132,8 @@ class Snatch3r(object):
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
 
+        self.running = False
+
         print('Goodbye!')
         ev3.Sound.speak('Goodbye').wait()
 
@@ -199,28 +201,33 @@ class Snatch3r(object):
         self.left_motor.run_forever(speed_sp=-left_speed)
         self.right_motor.run_forever(speed_sp=-right_speed)
 
-    def organize_color_retrieve(self, list_of_modes, color_input, mqtt_client):
-        # make red be sig1 (0), blue be sig2 (1), and green be sig3 (2)
-        self.pixy.mode = list_of_modes[color_input]
+    def organize_color_retrieve(self, button_state, list_of_modes,
+                                color_input):
+        list_of_names = ['red', 'blue', 'green']
+        color_reached = False
+        if button_state:
+            self.pixy.mode = list_of_modes[color_input]
+            print(self.pixy.mode, 'Color:', list_of_names[color_input])
+            if self.pixy.value(3) > 15 and self.pixy.value(4) > 15:
+                print('color detected')
+                while self.ir_sensor.proximity > 10:
+                    self.left_motor.run_forever(speed_sp=300)
+                    self.right_motor.run_forever(speed_sp=300)
 
-        if self.pixy.value(3) > 0 or self.pixy.value(4) > 0:
-            while self.ir_sensor.proximity > 10:
-                self.left_motor.run_forever(speed_sp=400)
-                self.right_motor.run_forever(speed_sp=400)
-            self.left_motor.stop()
-            self.right_motor.stop()
+                color_reached = True
+            else:
+                print('color not found')
+            if color_reached:
+                self.left_motor.stop()
+                self.right_motor.stop()
+                print('color reached')
+                self.drive_inches(5, 200)
 
-        else:
-            message = "Color could not be found"
-            mqtt_client.send_message("organize_mode_failure", [message])
+                self.arm_up()
 
-        self.drive_inches(5, 200)
+                self.turn_degrees(90, 300)
 
-        self.arm_up()
-
-        self.turn_degrees(90, 300)
-
-        self.organize_color_dropoff(color_input)
+            self.organize_color_dropoff(color_input)
 
     def organize_color_dropoff(self, color_input):
 
