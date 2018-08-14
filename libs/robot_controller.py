@@ -14,6 +14,7 @@
 import ev3dev.ev3 as ev3
 import math
 import time
+import mqtt_remote_method_calls as com
 
 
 class Snatch3r(object):
@@ -197,3 +198,63 @@ class Snatch3r(object):
     def go_backwards(self, left_speed, right_speed):
         self.left_motor.run_forever(speed_sp=-left_speed)
         self.right_motor.run_forever(speed_sp=-right_speed)
+
+    def organize_color_retrieve(self, list_of_modes, color_input, mqtt_client):
+        # make red be sig1 (0), blue be sig2 (1), and green be sig3 (2)
+        self.pixy.mode = list_of_modes[color_input]
+
+        if self.pixy.value(3) > 0 or self.pixy.value(4) > 0:
+            while self.ir_sensor.proximity > 10:
+                self.left_motor.run_forever(speed_sp=400)
+                self.right_motor.run_forever(speed_sp=400)
+            self.left_motor.stop()
+            self.right_motor.stop()
+
+        else:
+            message = "Color could not be found"
+            mqtt_client.send_message("organize_mode_failure", [message])
+
+        self.drive_inches(5, 200)
+
+        self.arm_up()
+
+        self.turn_degrees(90, 300)
+
+        self.organize_color_dropoff(color_input)
+
+    def organize_color_dropoff(self, color_input):
+
+        if color_input == 0:
+            color_to_seek = ev3.ColorSensor.COLOR_RED
+        elif color_input == 1:
+            color_to_seek = ev3.ColorSensor.COLOR_BLUE
+        elif color_input == 2:
+            color_to_seek = ev3.ColorSensor.COLOR_GREEN
+        else:
+            color_to_seek = ev3.ColorSensor.COLOR_WHITE
+
+        black_level = 10
+        white_level = 90
+
+        while self.color_sensor.color != color_to_seek:
+            light_intensity = self.color_sensor.reflected_light_intensity
+            if light_intensity > (black_level - 30) & light_intensity < (
+                    black_level + 30):
+                print('driving straight')
+                self.left_motor.run_forever(speed_sp=100)
+                self.right_motor.run_forever(speed_sp=100)
+                time.sleep(0.25)
+            if light_intensity > (white_level - 30) & light_intensity < (
+                    white_level + 30):
+                print('turning')
+                self.right_motor.stop()
+                time.sleep(0.25)
+            time.sleep(0.1)
+        ev3.Sound.speak("Found correct location")
+
+        self.left_motor.stop()
+        self.right_motor.stop()
+
+        self.turn_degrees(-90, 300)
+
+        self.arm_down()
