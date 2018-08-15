@@ -204,33 +204,33 @@ class Snatch3r(object):
     def organize_color_retrieve(self, button_state, list_of_modes,
                                 color_input):
         list_of_names = ['red', 'blue', 'green']
-        color_reached = False
+        print(color_input)
         if button_state:
             self.pixy.mode = list_of_modes[color_input]
+
             print(self.pixy.mode, 'Color:', list_of_names[color_input])
             if self.pixy.value(3) > 15 and self.pixy.value(4) > 15:
                 print('color detected')
-                while self.ir_sensor.proximity > 10:
-                    self.left_motor.run_forever(speed_sp=300)
-                    self.right_motor.run_forever(speed_sp=300)
-
+                self.drive_inches(10, 300)
                 color_reached = True
             else:
                 print('color not found')
+
+                return
+
             if color_reached:
                 self.left_motor.stop()
                 self.right_motor.stop()
                 print('color reached')
-                self.drive_inches(5, 200)
 
                 self.arm_up()
 
-                self.turn_degrees(90, 300)
+                self.turn_degrees(95, 300)
 
             self.organize_color_dropoff(color_input)
 
     def organize_color_dropoff(self, color_input):
-
+        print(color_input)
         if color_input == 0:
             color_to_seek = ev3.ColorSensor.COLOR_RED
         elif color_input == 1:
@@ -239,25 +239,26 @@ class Snatch3r(object):
             color_to_seek = ev3.ColorSensor.COLOR_GREEN
         else:
             color_to_seek = ev3.ColorSensor.COLOR_WHITE
+        print(color_to_seek)
+        light_intensity = self.color_sensor.reflected_light_intensity
 
-        black_level = 10
-        white_level = 90
+        while light_intensity > 15:
+            self.left_motor.run_forever(speed_sp=200)
+            self.right_motor.run_forever(speed_sp=200)
+            light_intensity = self.color_sensor.reflected_light_intensity
+            time.sleep(0.1)
+
+        print('reached turn')
+
+        self.left_motor.stop()
+        self.right_motor.stop()
+
+        self.turn_degrees(95, 200)
+        print('turned')
 
         while self.color_sensor.color != color_to_seek:
-            light_intensity = self.color_sensor.reflected_light_intensity
-            if light_intensity > (black_level - 30) & light_intensity < (
-                    black_level + 30):
-                print('driving straight')
-                self.left_motor.run_forever(speed_sp=100)
-                self.right_motor.run_forever(speed_sp=100)
-                time.sleep(0.25)
-            if light_intensity > (white_level - 30) & light_intensity < (
-                    white_level + 30):
-                print('turning')
-                self.right_motor.stop()
-                time.sleep(0.25)
-            time.sleep(0.1)
-        ev3.Sound.speak("Found correct location")
+            self.left_motor.run_forever(speed_sp=200)
+            self.right_motor.run_forever(speed_sp=200)
 
         self.left_motor.stop()
         self.right_motor.stop()

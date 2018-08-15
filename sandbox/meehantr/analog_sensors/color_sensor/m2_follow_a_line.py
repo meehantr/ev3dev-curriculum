@@ -96,7 +96,7 @@ def follow_the_line(robot, white_level, black_level):
             left_motor.run_forever(speed_sp=100)
             right_motor.run_forever(speed_sp=100)
             time.sleep(0.25)
-        if light_intensity > (white_level - 30) & light_intensity < (
+        if light_intensity > (white_level - 10) & light_intensity < (
                 white_level + 30):
             print('turning')
             right_motor.stop()
