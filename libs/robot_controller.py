@@ -209,7 +209,7 @@ class Snatch3r(object):
             self.pixy.mode = list_of_modes[color_input]
 
             print(self.pixy.mode, 'Color:', list_of_names[color_input])
-            if self.pixy.value(3) > 15 and self.pixy.value(4) > 15:
+            if self.pixy.value(3) > 5 and self.pixy.value(4) > 15:
                 print('color detected')
                 self.drive_inches(10, 300)
                 color_reached = True
